@@ -4,6 +4,14 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: A Lambda function conditionally triggered by a schedule.
 
+Parameters:
+
+  ExampleKey:
+    Type: String
+    Description: Example key
+    MinLength: 1
+    MaxLength: 256
+
 Resources:
 
   TimeFunction:
@@ -17,6 +25,7 @@ Resources:
       Environment:
         Variables:
           MY_KEY: "my-value"
+          EXAMPLE_KEY: !Ref ExampleKey
 
   ScheduledRule:
     Type: AWS::Events::Rule

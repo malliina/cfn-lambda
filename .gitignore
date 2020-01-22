@@ -2,3 +2,5 @@
 .bloop
 .hydra
 target/
+out
+hydra.sbt
