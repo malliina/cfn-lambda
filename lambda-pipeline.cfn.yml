@@ -53,7 +53,7 @@ Parameters:
     Description: Path to Lambda template configuration file
     MinLength: 1
     MaxLength: 1024
-    Default: lambda-configuration.yml
+    Default: lambda-configuration.json
 
   OutputTemplate:
     Type: String
@@ -88,6 +88,7 @@ Metadata:
       Parameters:
         - LambdaConf
         - BuildSpec
+        - OutputTemplate
         - KmsKeyAdmin
         - CodeBuildEnvironment
 
