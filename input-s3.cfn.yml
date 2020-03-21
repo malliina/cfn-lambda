@@ -2,7 +2,16 @@ AWSTemplateFormatVersion: '2010-09-09'
 
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+
+  ExampleKey:
+    Type: String
+    Description: Example key
+    MinLength: 1
+    MaxLength: 256
+
 Resources:
+
   CreateObject:
     Type: AWS::Serverless::Function
     Properties:
