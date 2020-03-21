@@ -18,6 +18,9 @@ Resources:
       Handler: com.malliina.lambda.s3.S3Handler
       Runtime: java8
       Timeout: 60
+      Environment:
+        Variables:
+          EXAMPLE_KEY: !Ref ExampleKey
       Policies: AWSLambdaExecute
       Events:
         CreateObjectEvent:
