@@ -17,7 +17,9 @@ Resources:
     Properties:
       Handler: com.malliina.lambda.s3.S3Handler
       Runtime: java8
+      CodeUri: ./function.jar
       Timeout: 60
+      MemorySize: 256
       Environment:
         Variables:
           EXAMPLE_KEY: !Ref ExampleKey
