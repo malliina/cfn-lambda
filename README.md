@@ -4,6 +4,8 @@ A [Lambda](https://aws.amazon.com/lambda/) function in Scala with
 [CloudFormation](https://aws.amazon.com/cloudformation/) templates that deploy the function and 
 trigger redeployments on version control updates.
 
+See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification.html for details.
+
 ## Prerequisites
 
 Save your GitHub access token as a SecretString under key `dev/github/token` in 

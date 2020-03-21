@@ -60,6 +60,9 @@ Parameters:
     Description: Input SAM template
     MinLength: 1
     Default: input.cfn.yml
+    AllowedValues:
+      - input.cfn.yml
+      - input-s3.cfn.yml
 
   OutputTemplate:
     Type: String
