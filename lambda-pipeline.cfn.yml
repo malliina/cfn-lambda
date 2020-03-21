@@ -48,7 +48,7 @@ Parameters:
     MaxLength: 1024
     Default: buildspec.yml
 
-  LambdaConf:
+  LambdaConfiguration:
     Type: String
     Description: Path to Lambda template configuration file
     MinLength: 1
@@ -61,7 +61,7 @@ Parameters:
     MinLength: 1
     Default: input.cfn.yml
     AllowedValues:
-      - input.cfn.yml
+      - input-scheduled.cfn.yml
       - input-s3.cfn.yml
 
   OutputTemplate:
@@ -95,7 +95,7 @@ Metadata:
     - Label:
         default: Build
       Parameters:
-        - LambdaConf
+        - LambdaConfiguration
         - BuildSpec
         - InputTemplate
         - OutputTemplate
@@ -130,7 +130,7 @@ Resources:
           - Name: KMS_KEY_ID
             Value: !If [ UseKms, !Ref KmsKey, '' ]
           - Name: LAMBDA_CONF
-            Value: !Ref LambdaConf
+            Value: !Ref LambdaConfiguration
       Source:
         BuildSpec: !Ref BuildSpec
         Type: CODEPIPELINE
@@ -193,7 +193,7 @@ Resources:
                 Capabilities: CAPABILITY_IAM
                 RoleArn: !GetAtt CloudFormationLambdaExecutionRole.Arn
                 TemplatePath: !Join ['::', [ MyAppBuild, !Ref OutputTemplate]]
-                TemplateConfiguration: !Join ['::', [ MyAppBuild, !Ref LambdaConf]]
+                TemplateConfiguration: !Join ['::', [ MyAppBuild, !Ref LambdaConfiguration]]
               RunOrder: 1
         - Name: Deploy
           Actions:

@@ -1,8 +1,8 @@
 # cfn-lambda
 
-A [Lambda](https://aws.amazon.com/lambda/) function in Scala with 
-[CloudFormation](https://aws.amazon.com/cloudformation/) templates that deploy the function and 
-trigger redeployments on version control updates.
+[AWS Lambda](https://aws.amazon.com/lambda/) functions in Scala with 
+[CloudFormation](https://aws.amazon.com/cloudformation/) templates that redeploy the functions on version control 
+updates.
 
 See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification.html for details.
 
@@ -14,6 +14,18 @@ Save your GitHub access token as a SecretString under key `dev/github/token` in
 ## Usage
 
 Deploy CloudFormation template [lambda-pipeline.cfn.yml](lambda-pipeline.cfn.yml).
+
+You must choose one of the following input templates as a parameter to the template:
+
+| Input template | What it does
+| -------------- | --------------
+| [input-scheduled.cfn.yml](input-scheduled.cfn.yml) | Triggers the Lambda based on an optional cron-style schedule
+| [input-s3.cfn.yml](input-s3.cfn.yml) | Triggers the Lambda based S3 event notifications, for example when a file is uploaded to S3
+
+Optional: Point the `LambdaConfiguration` parameter to a configuration file with custom parameters. The parameters in 
+the file will be exposed as environment variables to the Lambda. This can be useful if you deploy multiple instances of 
+the Lambda with different configuration parameters. An example [lambda-configuration.json](lambda-configuration.json) 
+file is provided.
 
 ### Deleting the stack
 
