@@ -59,7 +59,7 @@ Parameters:
     Type: String
     Description: Input SAM template
     MinLength: 1
-    Default: input.cfn.yml
+    Default: input-scheduled.cfn.yml
     AllowedValues:
       - input-scheduled.cfn.yml
       - input-s3.cfn.yml
