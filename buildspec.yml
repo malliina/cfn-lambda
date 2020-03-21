@@ -1,9 +1,8 @@
 # https://docs.aws.amazon.com/lambda/latest/dg/build-pipeline.html
-# Parameters KMS_KEY_ID and BUCKET_NAME are injected from the CloudFormation template.
+# Parameters INPUT, KMS_KEY_ID, and BUCKET_NAME are injected from the CloudFormation template.
 version: 0.2
 env:
   variables:
-    INPUT: "input.cfn.yml"
     OUTPUT: "output.cfn.yml"
     SBT_VERSION: "1.3.8"
 phases:
@@ -18,9 +17,9 @@ phases:
       - sbt assembly
       - |
         if [ "X$KMS_KEY_ID" = "X" ]; then
-          aws cloudformation package --template-file $INPUT --s3-bucket $BUCKET_NAME --output-template-file $OUTPUT
+          aws cloudformation package --template-file $INPUT_TEMPLATE --s3-bucket $BUCKET_NAME --output-template-file $OUTPUT
         else
-          aws cloudformation package --template-file $INPUT --s3-bucket $BUCKET_NAME --kms-key-id $KMS_KEY_ID --output-template-file $OUTPUT
+          aws cloudformation package --template-file $INPUT_TEMPLATE --s3-bucket $BUCKET_NAME --kms-key-id $KMS_KEY_ID --output-template-file $OUTPUT
         fi
 artifacts:
   type: zip

@@ -55,6 +55,12 @@ Parameters:
     MaxLength: 1024
     Default: lambda-configuration.json
 
+  InputTemplate:
+    Type: String
+    Description: Input SAM template
+    MinLength: 1
+    Default: input.cfn.yml
+
   OutputTemplate:
     Type: String
     Description: Output template produced by build
@@ -88,6 +94,7 @@ Metadata:
       Parameters:
         - LambdaConf
         - BuildSpec
+        - InputTemplate
         - OutputTemplate
         - KmsKeyAdmin
         - CodeBuildEnvironment
@@ -113,6 +120,8 @@ Resources:
         ComputeType: !Ref CodeBuildEnvironment
         Image: 'aws/codebuild/standard:2.0'
         EnvironmentVariables:
+          - Name: INPUT_TEMPLATE
+            Value: !Ref InputTemplate
           - Name: BUCKET_NAME
             Value: !Ref FunctionsS3Bucket
           - Name: KMS_KEY_ID
@@ -126,7 +135,6 @@ Resources:
 
   AppPipeline:
     Type: AWS::CodePipeline::Pipeline
-    # DependsOn: BeanstalkEnvironment
     Properties:
       RoleArn: !GetAtt CodePipelineServiceRole.Arn
       Stages:
