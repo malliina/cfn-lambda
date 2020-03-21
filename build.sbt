@@ -4,9 +4,10 @@ val scalaFunction = project
     version := "0.0.1",
     scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
+      "com.amazonaws" % "aws-java-sdk-s3" % "1.11.179",
       "com.amazonaws" % "aws-lambda-java-core" % "1.2.0",
       "com.amazonaws" % "aws-lambda-java-events" % "2.2.7",
-      "org.scalatest" %% "scalatest" % "3.0.8" % Test
+      "org.scalatest" %% "scalatest" % "3.1.1" % Test
     ),
     assemblyMergeStrategy in assembly := {
       case PathList("META-INF", _ @_*) => MergeStrategy.discard
@@ -20,3 +21,5 @@ val scalaFunction = project
       dest
     }
   )
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
