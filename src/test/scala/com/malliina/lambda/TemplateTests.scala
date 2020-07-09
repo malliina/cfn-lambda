@@ -1,9 +1,9 @@
 package com.malliina.lambda
 
-import org.scalatest.FunSuite
+import munit.FunSuite
 
 class TemplateTests extends FunSuite {
   test("can run test") {
-    assert(1 === 1)
+    assert(1 == 1)
   }
 }

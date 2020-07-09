@@ -4,6 +4,7 @@ Transform: AWS::Serverless-2016-10-31
 
 Parameters:
 
+  # Provided by lambda-configuration.json
   ExampleKey:
     Type: String
     Description: Example key
