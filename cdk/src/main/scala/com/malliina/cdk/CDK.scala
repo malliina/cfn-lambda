@@ -29,7 +29,7 @@ object CDK {
       "cdk-redirect"
     )
     val lambda = LambdaStack(app, "LambdaStack")
-    val lambdaPipeline = LambdaPipeline(LambdaConf(lambda.getStackId, lambda.code), app, "lambdah")
+    val lambdaPipeline = LambdaPipeline(LambdaConf(lambda.getStackId, lambda.code), app, "mylambda")
 
     val assembly = app.synth()
   }
