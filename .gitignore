@@ -4,3 +4,6 @@
 target/
 out
 hydra.sbt
+.bsp
+cdk.out
+cdk.context.json
