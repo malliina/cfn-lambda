@@ -11,14 +11,13 @@ phases:
     runtime-versions:
       java: openjdk11
     commands:
-      - cd lambda
       - echo `pwd`
       - curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
       - dpkg -i sbt-$SBT_VERSION.deb
       - sbt sbtVersion
-      - sbt assembly
-      - unzip function.jar -d jartarget
+      - sbt "project lambda" assembly
+      - unzip lambda/function.jar -d jartarget
 artifacts:
   files:
     - '**/*'
-  base-directory: lambda/jartarget
+  base-directory: jartarget
