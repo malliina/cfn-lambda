@@ -1,21 +1,25 @@
 inThisBuild(
   Seq(
-    scalaVersion := "2.13.3",
-    version := "0.0.1"
+    scalaVersion := "2.13.7",
+    version := "0.0.1",
+    libraryDependencies ++= Seq(
+      "org.scalameta" %% "munit" % "0.7.29" % Test
+    ),
+    testFrameworks += new TestFramework("munit.Framework")
   )
 )
 
 val lambda = project
   .in(file("lambda"))
   .settings(
-    libraryDependencies ++= Seq(
-      "com.amazonaws" % "aws-java-sdk-s3" % "1.11.819",
+    libraryDependencies ++= Seq("classic", "core").map { m =>
+      "ch.qos.logback" % s"logback-$m" % "1.2.7"
+    } ++ Seq(
+      "com.amazonaws" % "aws-java-sdk-s3" % "1.12.113",
       "com.amazonaws" % "aws-lambda-java-core" % "1.2.1",
-      "com.amazonaws" % "aws-lambda-java-events" % "3.1.0",
-      "org.scalameta" %% "munit" % "0.7.13" % Test
+      "com.amazonaws" % "aws-lambda-java-events" % "3.10.0"
     ),
-    testFrameworks += new TestFramework("munit.Framework"),
-    assemblyMergeStrategy in assembly := {
+    assembly / assemblyMergeStrategy := {
       case PathList("META-INF", _ @_*) => MergeStrategy.discard
       case _                           => MergeStrategy.first
     },
@@ -34,12 +38,7 @@ val cdkModules =
 val cdk = project
   .in(file("cdk"))
   .settings(
-    libraryDependencies ++= cdkModules.map { module =>
-      "software.amazon.awscdk" % module % "1.67.0"
-    } ++ Seq(
-      "org.scalameta" %% "munit" % "0.7.13" % Test
-    ),
-    testFrameworks += new TestFramework("munit.Framework")
+    libraryDependencies ++= cdkModules.map { module => "software.amazon.awscdk" % module % "1.132.0" }
   )
 
 val root = project.in(file(".")).aggregate(lambda, cdk)

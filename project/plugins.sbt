@@ -1,5 +1,5 @@
-scalaVersion := "2.12.12"
+scalaVersion := "2.12.15"
 
 Seq(
-  "com.eed3si9n" % "sbt-assembly" % "0.14.9"
+  "com.eed3si9n" % "sbt-assembly" % "1.1.0"
 ) map addSbtPlugin

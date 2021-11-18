@@ -11,7 +11,7 @@ import software.amazon.awscdk.services.lambda.CfnParametersCode
 import software.constructs.Construct
 
 object LambdaPipeline {
-  case class LambdaConf(stackId: String, code: CfnParametersCode)
+  case class LambdaConf(code: CfnParametersCode)
 
   def apply(conf: LambdaConf, scope: Construct, stackName: String): LambdaPipeline =
     new LambdaPipeline(conf, scope, stackName)
@@ -79,7 +79,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
             .create()
             .actionName("StageAction")
             .changeSetName(changeSetName)
-            .templatePath(stackBuildOut.atPath(s"${conf.stackId}.template.json"))
+            .templatePath(stackBuildOut.atPath(s"LambdaStack.template.json"))
             .stackName(lambdaStackName)
             .adminPermissions(true)
             .extraInputs(list(buildOut))

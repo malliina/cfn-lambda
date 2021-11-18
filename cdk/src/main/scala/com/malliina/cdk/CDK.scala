@@ -14,7 +14,7 @@ object CDK {
     val app = new AWSApp()
 
     val lambda = LambdaStack(app, "LambdaStack")
-    val lambdaPipeline = LambdaPipeline(LambdaConf(lambda.getStackId, lambda.code), app, "mylambda")
+    val lambdaPipeline = LambdaPipeline(LambdaConf(lambda.code), app, "mylambda2")
 
     val assembly = app.synth()
   }
