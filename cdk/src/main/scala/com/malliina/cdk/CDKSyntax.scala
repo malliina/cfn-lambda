@@ -8,10 +8,10 @@ import software.amazon.awscdk.services.iam.ServicePrincipal
 
 import scala.jdk.CollectionConverters.{MapHasAsJava, SeqHasAsJava}
 
-trait CDKSyntax {
+trait CDKSyntax:
   def principal(service: String) = ServicePrincipal.Builder.create(service).build()
   def list[T](xs: T*) = xs.asJava
-  def map[T](kvs: (String, T)*) = Map(kvs: _*).asJava
+  def map[T](kvs: (String, T)*) = Map(kvs*).asJava
   def optionSetting(namespace: String, optionName: String, value: String) =
     ConfigurationOptionSettingProperty
       .builder()
@@ -19,13 +19,12 @@ trait CDKSyntax {
       .optionName(optionName)
       .value(value)
       .build()
-  def outputs(scope: Stack)(kvs: (String, String)*) = kvs.map {
-    case (k, v) =>
-      CfnOutput.Builder
-        .create(scope, k)
-        .exportName(k)
-        .value(v)
-        .build()
+  def outputs(scope: Stack)(kvs: (String, String)*) = kvs.map { case (k, v) =>
+    CfnOutput.Builder
+      .create(scope, k)
+      .exportName(k)
+      .value(v)
+      .build()
   }
 
   def buildEnv(value: String) =
@@ -39,6 +38,5 @@ trait CDKSyntax {
     StageProps
       .builder()
       .stageName(name)
-      .actions(list(actions: _*))
+      .actions(list(actions*))
       .build()
-}

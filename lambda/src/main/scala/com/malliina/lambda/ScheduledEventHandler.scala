@@ -5,10 +5,8 @@ import java.time.Instant
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 
-class ScheduledEventHandler extends RequestHandler[ScheduledEvent, String] {
-  override def handleRequest(event: ScheduledEvent, context: Context): String = {
+class ScheduledEventHandler extends RequestHandler[ScheduledEvent, String]:
+  override def handleRequest(event: ScheduledEvent, context: Context): String =
     val now = Instant.now()
     println(s"Hello, Lambda! The time is now $now.")
     Option(event.getId).fold("Handled event.")(id => s"Handled event '$id'.")
-  }
-}

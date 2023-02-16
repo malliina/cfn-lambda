@@ -3,17 +3,12 @@
 # Use input.cfn.yml to create an AWS API Gateway API proxy to your Lambda.
 # Use input-slim.cfn.yml to create a Lambda without any API Gateway integration.
 version: 0.2
-env:
-  variables:
-    SBT_VERSION: "1.4.0"
 phases:
   install:
     runtime-versions:
-      java: openjdk11
+      java: corretto11
     commands:
       - echo `pwd`
-      - curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-      - dpkg -i sbt-$SBT_VERSION.deb
       - sbt sbtVersion
       - sbt "project lambda" assembly
       - unzip lambda/function.jar -d jartarget

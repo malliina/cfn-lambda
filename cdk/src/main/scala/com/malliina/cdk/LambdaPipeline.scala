@@ -1,30 +1,30 @@
 package com.malliina.cdk
 
+import buildinfo.BuildInfo
 import com.malliina.cdk.LambdaPipeline.LambdaConf
 import software.amazon.awscdk.core.Stack
 import software.amazon.awscdk.services.cloudformation.CloudFormationCapabilities
-import software.amazon.awscdk.services.codebuild._
+import software.amazon.awscdk.services.codebuild.*
 import software.amazon.awscdk.services.codecommit.Repository
 import software.amazon.awscdk.services.codepipeline.actions.{CloudFormationCreateReplaceChangeSetAction, CloudFormationExecuteChangeSetAction, CodeBuildAction, CodeCommitSourceAction}
 import software.amazon.awscdk.services.codepipeline.{Artifact, Pipeline}
 import software.amazon.awscdk.services.lambda.CfnParametersCode
 import software.constructs.Construct
 
-object LambdaPipeline {
+object LambdaPipeline:
   case class LambdaConf(code: CfnParametersCode)
 
   def apply(conf: LambdaConf, scope: Construct, stackName: String): LambdaPipeline =
     new LambdaPipeline(conf, scope, stackName)
-}
 
 class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
   extends Stack(scope, stackName, CDK.stackProps)
-  with CDKSyntax {
+  with CDKSyntax:
   val stack = this
   val source = Repository.Builder.create(stack, "Source").repositoryName(getStackName).build()
   val buildEnv = BuildEnvironment
     .builder()
-    .buildImage(LinuxBuildImage.STANDARD_2_0)
+    .buildImage(LinuxBuildImage.STANDARD_5_0)
     .computeType(ComputeType.MEDIUM)
     .build()
   val build = PipelineProject.Builder
@@ -38,6 +38,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
     .projectName(s"$getStackName-stack")
     .environment(buildEnv)
     .buildSpec(BuildSpec.fromSourceFilename("lambda/buildspec-stack.yml"))
+    .environmentVariables(map("CDK_VERSION" -> buildEnv(BuildInfo.cdkVersion)))
     .build()
   val sourceOut = new Artifact()
   val buildOut = new Artifact()
@@ -104,4 +105,3 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
       )
     )
     .build()
-}
