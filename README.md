@@ -11,16 +11,21 @@ See https://docs.aws.amazon.com/serverless-application-model/latest/developergui
 Save your GitHub access token as a SecretString under key `dev/github/token` in 
 [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/).
 
+## CDK Usage
+
+    cdk deploy lambda-pipe
+    
+
 ## Usage
 
 Deploy CloudFormation template [lambda-pipeline.cfn.yml](lambda-pipeline.cfn.yml).
 
 You must choose one of the following input templates as a parameter to the template:
 
-| Input template | What it does
-| -------------- | --------------
-| [input-scheduled.cfn.yml](input-scheduled.cfn.yml) | Triggers the Lambda based on an optional cron-style schedule
-| [input-s3.cfn.yml](input-s3.cfn.yml) | Triggers the Lambda based S3 event notifications, for example when a file is uploaded to S3
+| Input template                                     | What it does                                                                                |
+|----------------------------------------------------|---------------------------------------------------------------------------------------------|
+| [input-scheduled.cfn.yml](input-scheduled.cfn.yml) | Triggers the Lambda based on an optional cron-style schedule                                |
+| [input-s3.cfn.yml](input-s3.cfn.yml)               | Triggers the Lambda based S3 event notifications, for example when a file is uploaded to S3 |
 
 Optional: Point the `LambdaConfiguration` parameter to a configuration file with custom parameters. The parameters in 
 the file will be exposed as environment variables to the Lambda. This can be useful if you deploy multiple instances of 

@@ -1,7 +1,6 @@
 package com.malliina.cdk
 
 import buildinfo.BuildInfo
-import com.malliina.cdk.LambdaPipeline.LambdaConf
 import software.amazon.awscdk.core.Stack
 import software.amazon.awscdk.services.cloudformation.CloudFormationCapabilities
 import software.amazon.awscdk.services.codebuild.*
@@ -11,17 +10,17 @@ import software.amazon.awscdk.services.codepipeline.{Artifact, Pipeline}
 import software.amazon.awscdk.services.lambda.CfnParametersCode
 import software.constructs.Construct
 
-object LambdaPipeline:
-  case class LambdaConf(code: CfnParametersCode)
-
-  def apply(conf: LambdaConf, scope: Construct, stackName: String): LambdaPipeline =
-    new LambdaPipeline(conf, scope, stackName)
+case class LambdaConf(code: CfnParametersCode, constructId: String)
 
 class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
   extends Stack(scope, stackName, CDK.stackProps)
   with CDKSyntax:
   val stack = this
-  val source = Repository.Builder.create(stack, "Source").repositoryName(getStackName).build()
+  val source = Repository.Builder
+    .create(stack, "Source")
+    .repositoryName(getStackName)
+    .description(s"Code for $getStackName.")
+    .build()
   val buildEnv = BuildEnvironment
     .builder()
     .buildImage(LinuxBuildImage.STANDARD_5_0)
@@ -80,7 +79,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
             .create()
             .actionName("StageAction")
             .changeSetName(changeSetName)
-            .templatePath(stackBuildOut.atPath(s"LambdaStack.template.json"))
+            .templatePath(stackBuildOut.atPath(s"${conf.constructId}.template.json"))
             .stackName(lambdaStackName)
             .adminPermissions(true)
             .extraInputs(list(buildOut))
