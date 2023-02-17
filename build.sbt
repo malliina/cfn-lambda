@@ -13,8 +13,9 @@ val lambda = project
   .in(file("lambda"))
   .settings(
     libraryDependencies ++= Seq("classic", "core").map { m =>
-      "ch.qos.logback" % s"logback-$m" % "1.2.7"
+      "ch.qos.logback" % s"logback-$m" % "1.4.5"
     } ++ Seq(
+      "org.slf4j" % "slf4j-api" % "2.0.6",
       "com.amazonaws" % "aws-java-sdk-s3" % "1.12.408",
       "com.amazonaws" % "aws-lambda-java-core" % "1.2.2",
       "com.amazonaws" % "aws-lambda-java-events" % "3.11.0"
