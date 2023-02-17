@@ -1,7 +1,4 @@
 version: 0.2
-env:
-  variables:
-    OUTPUT: $LAMBDA_STACK.template.json
 phases:
   install:
     runtime-versions:
