@@ -1,8 +1,7 @@
 package com.malliina.cdk
 
 import buildinfo.BuildInfo
-import software.amazon.awscdk.core.Stack
-import software.amazon.awscdk.services.cloudformation.CloudFormationCapabilities
+import software.amazon.awscdk.{CfnCapabilities, Stack}
 import software.amazon.awscdk.services.codebuild.*
 import software.amazon.awscdk.services.codecommit.Repository
 import software.amazon.awscdk.services.codepipeline.actions.{CloudFormationCreateReplaceChangeSetAction, CloudFormationExecuteChangeSetAction, CodeBuildAction, CodeCommitSourceAction}
@@ -91,11 +90,11 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
             .adminPermissions(true)
             .extraInputs(list(buildOut))
             .parameterOverrides(conf.code.assign(buildOut.getS3Location))
-            .capabilities(
+            .cfnCapabilities(
               list(
-                CloudFormationCapabilities.ANONYMOUS_IAM,
-                CloudFormationCapabilities.NAMED_IAM,
-                CloudFormationCapabilities.AUTO_EXPAND
+                CfnCapabilities.ANONYMOUS_IAM,
+                CfnCapabilities.NAMED_IAM,
+                CfnCapabilities.AUTO_EXPAND
               )
             )
             .build()

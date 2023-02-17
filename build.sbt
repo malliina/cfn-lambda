@@ -16,7 +16,7 @@ val lambda = project
       "ch.qos.logback" % s"logback-$m" % "1.4.5"
     } ++ Seq(
       "org.slf4j" % "slf4j-api" % "2.0.6",
-      "com.amazonaws" % "aws-java-sdk-s3" % "1.12.408",
+      "com.amazonaws" % "aws-java-sdk-s3" % "1.12.409",
       "com.amazonaws" % "aws-lambda-java-core" % "1.2.2",
       "com.amazonaws" % "aws-lambda-java-events" % "3.11.0"
     ),
@@ -37,9 +37,7 @@ val lambda = project
     }
   )
 
-val cdkModules =
-  Seq("s3", "elasticbeanstalk", "codebuild", "codecommit", "codepipeline-actions", "lambda")
-val cdkVersion = "1.193.0"
+val cdkVersion = "2.65.0"
 val cdk = project
   .in(file("cdk"))
   .enablePlugins(BuildInfoPlugin)
@@ -51,9 +49,9 @@ val cdk = project
       sbtVersion,
       "cdkVersion" -> cdkVersion
     ),
-    libraryDependencies ++= cdkModules.map { module =>
-      "software.amazon.awscdk" % module % cdkVersion
-    }
+    libraryDependencies ++= Seq(
+      "software.amazon.awscdk" % "aws-cdk-lib" % cdkVersion
+    )
   )
 
 val root = project.in(file(".")).aggregate(lambda, cdk)

@@ -1,6 +1,6 @@
 package com.malliina.cdk
 
-import software.amazon.awscdk.core.{CfnOutput, Stack}
+import software.amazon.awscdk.{CfnOutput, Stack}
 import software.amazon.awscdk.services.codebuild.{BuildEnvironmentVariable, BuildEnvironmentVariableType}
 import software.amazon.awscdk.services.codepipeline.{IAction, StageProps}
 import software.amazon.awscdk.services.elasticbeanstalk.CfnConfigurationTemplate.ConfigurationOptionSettingProperty

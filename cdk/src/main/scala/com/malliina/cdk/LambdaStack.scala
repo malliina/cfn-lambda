@@ -1,7 +1,8 @@
 package com.malliina.cdk
 
-import software.amazon.awscdk.core.{Construct, Duration, Stack}
+import software.amazon.awscdk.{Duration, Stack}
 import software.amazon.awscdk.services.lambda.{CfnParametersCode, Function as LambdaFunction, Runtime as LambdaRuntime}
+import software.constructs.Construct
 
 class LambdaStack(scope: Construct, val constructId: String)
   extends Stack(scope, constructId, CDK.stackProps):

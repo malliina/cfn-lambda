@@ -1,6 +1,6 @@
 package com.malliina.cdk
 
-import software.amazon.awscdk.core.{Environment, StackProps, App as AWSApp}
+import software.amazon.awscdk.{App as AWSApp, Environment, StackProps}
 
 object CDK:
   val stackProps =
