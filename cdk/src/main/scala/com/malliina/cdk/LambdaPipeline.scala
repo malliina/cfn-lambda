@@ -32,6 +32,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
     .environment(buildEnv)
     .buildSpec(BuildSpec.fromSourceFilename("lambda/buildspec-function.yml"))
     .build()
+  val stackOutPath = s"${conf.constructId}.template.json"
   val stackBuild = PipelineProject.Builder
     .create(stack, "StackBuild")
     .projectName(s"$getStackName-stack")
@@ -40,7 +41,8 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
     .environmentVariables(
       map(
         "CDK_VERSION" -> buildEnv(BuildInfo.cdkVersion),
-        "LAMBDA_STACK" -> buildEnv(conf.constructId)
+        "LAMBDA_STACK" -> buildEnv(conf.constructId),
+        "OUTPUT" -> buildEnv(stackOutPath)
       )
     )
     .build()
@@ -84,7 +86,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
             .create()
             .actionName("StageAction")
             .changeSetName(changeSetName)
-            .templatePath(stackBuildOut.atPath(s"${conf.constructId}.template.json"))
+            .templatePath(stackBuildOut.atPath(stackOutPath))
             .stackName(lambdaStackName)
             .adminPermissions(true)
             .extraInputs(list(buildOut))
