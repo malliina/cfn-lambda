@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    OUTPUT: "LambdaStack.template.json"
+    OUTPUT: $LAMBDA_STACK.template.json
 phases:
   install:
     runtime-versions:
@@ -11,7 +11,7 @@ phases:
       - npm install -g aws-cdk@$CDK_VERSION
   build:
     commands:
-      - cdk synth LambdaStack -o target
+      - cdk synth $LAMBDA_STACK -o target
 artifacts:
   files:
     - $OUTPUT

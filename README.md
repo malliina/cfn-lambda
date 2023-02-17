@@ -14,7 +14,10 @@ Save your GitHub access token as a SecretString under key `dev/github/token` in
 ## CDK Usage
 
     cdk deploy lambda-pipe
-    
+    git remote add aws codecommit::eu-west-1://lambda-pipe
+    git push aws
+
+This triggers CodePipeline to build the Lambda function code and the Lambda stack, and deploys them.
 
 ## Usage
 

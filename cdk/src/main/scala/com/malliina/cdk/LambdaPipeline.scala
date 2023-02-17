@@ -37,7 +37,12 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
     .projectName(s"$getStackName-stack")
     .environment(buildEnv)
     .buildSpec(BuildSpec.fromSourceFilename("lambda/buildspec-stack.yml"))
-    .environmentVariables(map("CDK_VERSION" -> buildEnv(BuildInfo.cdkVersion)))
+    .environmentVariables(
+      map(
+        "CDK_VERSION" -> buildEnv(BuildInfo.cdkVersion),
+        "LAMBDA_STACK" -> buildEnv(conf.constructId)
+      )
+    )
     .build()
   val sourceOut = new Artifact()
   val buildOut = new Artifact()
