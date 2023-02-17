@@ -21,8 +21,12 @@ val lambda = project
       "com.amazonaws" % "aws-lambda-java-events" % "3.11.0"
     ),
     assembly / assemblyMergeStrategy := {
-      case PathList("META-INF", _ @_*) => MergeStrategy.discard
-      case _                           => MergeStrategy.first
+      case PathList("META-INF", xs @ _*) =>
+        xs.map(_.toLowerCase) match {
+          case "services" :: xs => MergeStrategy.filterDistinctLines
+          case _                => MergeStrategy.discard
+        }
+      case _ => MergeStrategy.first
     },
     assembly := {
       val src = assembly.value

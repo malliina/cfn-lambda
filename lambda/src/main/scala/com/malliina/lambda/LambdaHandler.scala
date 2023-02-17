@@ -6,7 +6,7 @@ import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import org.slf4j.LoggerFactory
 
 class LambdaHandler extends RequestHandler[ScheduledEvent, String]:
-  val log = LoggerFactory.getLogger(getClass)
+  val log = AppLogger(getClass)
 
   override def handleRequest(event: ScheduledEvent, context: Context): String =
     val now = Instant.now()
