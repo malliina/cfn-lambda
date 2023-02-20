@@ -18,11 +18,11 @@ class LambdaStack(scope: Construct, val constructId: String)
     .memorySize(256)
     .timeout(Duration.seconds(60))
     .build()
-  val streamLambda: IFunction =
-    LambdaFunction.fromFunctionName(stack, "StreamFunction", "LogsToElasticsearch_search")
-  val filter = SubscriptionFilter.Builder
-    .create(stack, "Filter")
-    .logGroup(function.getLogGroup)
-    .destination(LambdaDestination.Builder.create(streamLambda).build())
-    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
-    .build()
+//  val streamLambda: IFunction =
+//    LambdaFunction.fromFunctionName(stack, "StreamFunction", "LogsToElasticsearch_search")
+//  val filter = SubscriptionFilter.Builder
+//    .create(stack, "Filter")
+//    .logGroup(function.getLogGroup)
+//    .destination(LambdaDestination.Builder.create(streamLambda).build())
+//    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
+//    .build()
