@@ -12,8 +12,8 @@ object CDK:
   def main(args: Array[String]): Unit =
     val app = new AWSApp()
 
-    val lambda = LambdaStack(app, "func-stack")
+    val prefix = "demo"
+    val lambda = LambdaStack(app, s"$prefix-stack")
     val lambdaPipeline =
-      LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, "func-pipe")
-
+      LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, s"$prefix-pipe")
     val assembly = app.synth()

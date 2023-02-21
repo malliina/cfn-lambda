@@ -24,12 +24,13 @@ class LambdaStack(scope: Construct, val constructId: String)
     "StreamFunc",
     "arn:aws:lambda:eu-west-1:297686094835:function:LogsToElasticsearch_search"
   )
-  val logGroup =
-    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
-  val filter = SubscriptionFilter.Builder
-    .create(stack, "Filter")
-//  .logGroup(function.getLogGroup)
-    .logGroup(logGroup)
-    .destination(LambdaDestination.Builder.create(streamLambda).build())
-    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
-    .build()
+//  val lg = function.log
+//  val logGroup =
+//    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
+//  val filter = SubscriptionFilter.Builder
+//    .create(stack, "Filter")
+////  .logGroup(function.getLogGroup)
+//    .logGroup(logGroup)
+//    .destination(LambdaDestination.Builder.create(streamLambda).build())
+//    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
+//    .build()
