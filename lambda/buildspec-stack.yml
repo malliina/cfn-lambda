@@ -8,8 +8,8 @@ phases:
       - npm install -g aws-cdk@$CDK_VERSION
   build:
     commands:
-      - cdk synth $LAMBDA_STACK -o target
+      - cdk synth -o target
 artifacts:
   files:
-    - $OUTPUT
+    - '**/*'
   base-directory: target
