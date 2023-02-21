@@ -2,7 +2,7 @@ package com.malliina.cdk
 
 import software.amazon.awscdk.{Duration, Stack}
 import software.amazon.awscdk.services.lambda.{CfnParametersCode, FunctionAttributes, IFunction, Function as LambdaFunction, Runtime as LambdaRuntime}
-import software.amazon.awscdk.services.logs.{FilterPattern, ILogGroup, SubscriptionFilter}
+import software.amazon.awscdk.services.logs.{CfnSubscriptionFilter, FilterPattern, ILogGroup, RetentionDays, SubscriptionFilter}
 import software.amazon.awscdk.services.logs.destinations.LambdaDestination
 import software.constructs.Construct
 
@@ -17,15 +17,19 @@ class LambdaStack(scope: Construct, val constructId: String)
     .code(code)
     .memorySize(256)
     .timeout(Duration.seconds(60))
+    .logRetention(RetentionDays.THREE_MONTHS)
     .build()
   val streamLambda = LambdaFunction.fromFunctionArn(
     stack,
     "StreamFunc",
     "arn:aws:lambda:eu-west-1:297686094835:function:LogsToElasticsearch_search"
   )
-//  val filter = SubscriptionFilter.Builder
-//    .create(stack, "Filter")
-//    .logGroup(function.getLogGroup)
-//    .destination(LambdaDestination.Builder.create(streamLambda).build())
-//    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
-//    .build()
+//  CfnSubscriptionFilter.Builder.create(stack, "SubFilter")
+//    .filterName("delimited")
+//    .logGroupName(function.log)
+  val filter = SubscriptionFilter.Builder
+    .create(stack, "Filter")
+    .logGroup(function.getLogGroup)
+    .destination(LambdaDestination.Builder.create(streamLambda).build())
+    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
+    .build()
