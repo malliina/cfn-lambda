@@ -1,7 +1,7 @@
 package com.malliina.cdk
 
 import buildinfo.BuildInfo
-import software.amazon.awscdk.{CfnCapabilities, Stack}
+import software.amazon.awscdk.{CfnCapabilities, DefaultStackSynthesizer, Stack}
 import software.amazon.awscdk.services.codebuild.*
 import software.amazon.awscdk.services.codecommit.Repository
 import software.amazon.awscdk.services.codepipeline.actions.{CloudFormationCreateReplaceChangeSetAction, CloudFormationExecuteChangeSetAction, CodeBuildAction, CodeCommitSourceAction}
@@ -50,7 +50,11 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
     .create()
     .effect(Effect.ALLOW)
     .actions(list("sts:AssumeRole"))
-    .resources(list(s"arn:aws:iam:$getAccount:role/cdk-*"))
+    .resources(
+      list(
+        s"arn:aws:iam::$getAccount:role/cdk-${DefaultStackSynthesizer.DEFAULT_QUALIFIER}-file-publishing-role-$getAccount-$getRegion"
+      )
+    )
     .build()
   stackBuild.addToRolePolicy(cdkAssetPublishingPolicy)
   val sourceOut = new Artifact()

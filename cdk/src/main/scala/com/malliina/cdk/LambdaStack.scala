@@ -21,7 +21,7 @@ class LambdaStack(scope: Construct, val constructId: String)
   val streamLambda = LambdaFunction.fromFunctionArn(
     stack,
     "StreamFunc",
-    "arn:aws:lambda:eu-west-1:297686094835:function:LogsToElasticsearch_search"
+    s"arn:aws:lambda:eu-west-1:$getAccount:function:LogsToElasticsearch_search"
   )
   // https://github.com/aws/aws-cdk/issues/12958
 //  val logGroup =
