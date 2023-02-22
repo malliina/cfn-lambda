@@ -16,5 +16,5 @@ object CDK:
 //    val lambda = LambdaStack(app, s"$prefix-stack")
 //    val lambdaPipeline =
 //      LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, s"$prefix-pipe")
-    val lambdaWithCdkPipelines = PipelinesStack(app, "pipelines-lambda")
+    val lambdaWithCdkPipelines = PipelinesStack(app, "pipes-lambda")
     val assembly = app.synth()

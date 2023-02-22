@@ -27,7 +27,6 @@ class PipelinesStack(scope: Construct, stackName: String)
         .build()
     )
     .build()
-
   val lambdaApp = pipeline.addStage(LambdaStage(stack, "qa"))
 
 class LambdaStage(scope: Construct, id: String) extends Stage(scope, id):

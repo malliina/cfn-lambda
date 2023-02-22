@@ -7,8 +7,10 @@
 
 Based on https://docs.aws.amazon.com/cdk/v2/guide/cdk_pipeline.html
 
-    cdk deploy pipelines-lambda
-    git remote add aws codecommit::eu-west-1://pipelines-lambda
+Comment the `pipeline.addStage` calls in [PipelinesStack.scala](cdk/src/main/scala/com/malliina/cdk/PipelinesStack.scala).
+
+    cdk deploy pipes-lambda
+    git remote add aws codecommit::eu-west-1://pipes-lambda
     git push aws
 
 Pushing to the remote deploys the Lambda.
