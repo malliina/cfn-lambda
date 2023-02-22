@@ -9,6 +9,7 @@ phases:
   build:
     commands:
       - cdk synth -o target
+      - ls -al target
 artifacts:
   files:
     - '**/*'
