@@ -23,14 +23,7 @@ class PipelinesStack(scope: Construct, stackName: String)
       ShellStep.Builder
         .create("Synth")
         .input(CodePipelineSource.codeCommit(source, "master"))
-        .commands(
-          list(
-            """sbt "project lambda" assembly""",
-            "unzip lambda/function.jar -d jartarget",
-            s"npm install -g aws-cdk@$cdkVersion",
-            "cdk synth"
-          )
-        )
+        .commands(list("./cdk/build.sh"))
         .build()
     )
     .build()
