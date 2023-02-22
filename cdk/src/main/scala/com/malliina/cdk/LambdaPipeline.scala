@@ -46,6 +46,7 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
       )
     )
     .build()
+  // https://github.com/aws/aws-cdk/issues/11025#issuecomment-1219129002
   val cdkAssetPublishingPolicy = PolicyStatement.Builder
     .create()
     .effect(Effect.ALLOW)

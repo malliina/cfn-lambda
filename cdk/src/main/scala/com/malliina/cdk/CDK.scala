@@ -12,7 +12,7 @@ object CDK:
   def main(args: Array[String]): Unit =
     val app = new AWSApp()
 
-    val prefix = "fun"
+    val prefix = "assets"
     val lambda = LambdaStack(app, s"$prefix-stack")
     val lambdaPipeline =
       LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, s"$prefix-pipe")
