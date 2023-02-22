@@ -1,6 +1,6 @@
 package com.malliina.cdk
 
-import software.amazon.awscdk.{App as AWSApp, Environment, StackProps}
+import software.amazon.awscdk.{Environment, StackProps, StageProps, App as AWSApp}
 
 object CDK:
   val stackProps =
@@ -12,9 +12,9 @@ object CDK:
   def main(args: Array[String]): Unit =
     val app = new AWSApp()
 
-    val prefix = "assets"
-    val lambda = LambdaStack(app, s"$prefix-stack")
-    val lambdaPipeline =
-      LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, s"$prefix-pipe")
-    val lambdaWithCdkPipelines = PipelineStack(app, "pipelines-lambda")
+//    val prefix = "assets"
+//    val lambda = LambdaStack(app, s"$prefix-stack")
+//    val lambdaPipeline =
+//      LambdaPipeline(LambdaConf(lambda.code, lambda.constructId), app, s"$prefix-pipe")
+    val lambdaWithCdkPipelines = PipelinesStack(app, "pipelines-lambda")
     val assembly = app.synth()
