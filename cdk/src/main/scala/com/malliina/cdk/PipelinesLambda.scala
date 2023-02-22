@@ -18,7 +18,7 @@ class PipelineStack(scope: Construct, stackName: String)
     .build()
   val pipeline = CodePipeline.Builder
     .create(stack, "Pipeline")
-    .pipelineName("Lambda with Pipelines")
+    .pipelineName(getStackName)
     .synth(
       ShellStep.Builder
         .create("Synth")
@@ -27,3 +27,5 @@ class PipelineStack(scope: Construct, stackName: String)
         .build()
     )
     .build()
+
+class AppStack(scope: Construct, id: String) extends Stack(scope, id):
