@@ -17,20 +17,19 @@ class LambdaStack(scope: Construct, val constructId: String)
     .code(code)
     .memorySize(256)
     .timeout(Duration.seconds(60))
-    .logRetention(RetentionDays.THREE_MONTHS)
     .build()
   val streamLambda = LambdaFunction.fromFunctionArn(
     stack,
     "StreamFunc",
     "arn:aws:lambda:eu-west-1:297686094835:function:LogsToElasticsearch_search"
   )
-//  val lg = function.log
-//  val logGroup =
-//    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
-//  val filter = SubscriptionFilter.Builder
-//    .create(stack, "Filter")
-////  .logGroup(function.getLogGroup)
-//    .logGroup(logGroup)
-//    .destination(LambdaDestination.Builder.create(streamLambda).build())
-//    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
-//    .build()
+  // https://github.com/aws/aws-cdk/issues/12958
+  val logGroup =
+    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
+  val filter = SubscriptionFilter.Builder
+    .create(stack, "Filter")
+//  .logGroup(function.getLogGroup)
+    .logGroup(logGroup)
+    .destination(LambdaDestination.Builder.create(streamLambda).build())
+    .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
+    .build()
