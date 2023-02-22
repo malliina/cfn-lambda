@@ -28,4 +28,4 @@ class PipelineStack(scope: Construct, stackName: String)
     )
     .build()
 
-class AppStack(scope: Construct, id: String) extends Stack(scope, id):
+//class AppStack(scope: Construct, id: String) extends Stack(scope, id):
