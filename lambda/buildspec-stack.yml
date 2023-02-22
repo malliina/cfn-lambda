@@ -1,3 +1,4 @@
+# https://github.com/aws/aws-cdk/issues/11025#issuecomment-1207476335
 version: 0.2
 phases:
   install:
@@ -6,11 +7,14 @@ phases:
     commands:
       - echo `pwd`
       - npm install -g aws-cdk@$CDK_VERSION
+      - npm install -g cdk-assets@$CDK_VERSION
+  pre-build:
+    commands:
+      - cdk synth $LAMBDA_STACK -o target
   build:
     commands:
-      - cdk synth -o cdk-target
-      - ls -al cdk-target
+      - cdk-assets -p target/$LAMBDA_STACK.assets.json publish
 artifacts:
   files:
-    - '**/*'
-  base-directory: cdk-target
+    - $OUTPUT
+  base-directory: target

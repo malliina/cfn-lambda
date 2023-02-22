@@ -24,12 +24,11 @@ class LambdaStack(scope: Construct, val constructId: String)
     "arn:aws:lambda:eu-west-1:297686094835:function:LogsToElasticsearch_search"
   )
   // https://github.com/aws/aws-cdk/issues/12958
-  val logGroup =
-    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
+//  val logGroup =
+//    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
   val filter = SubscriptionFilter.Builder
     .create(stack, "Filter")
-//  .logGroup(function.getLogGroup)
-    .logGroup(logGroup)
+    .logGroup(function.getLogGroup)
     .destination(LambdaDestination.Builder.create(streamLambda).build())
     .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
     .build()
