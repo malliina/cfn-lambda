@@ -11,6 +11,9 @@ Comment the `pipeline.addStage` calls in [PipelinesStack.scala](cdk/src/main/sca
 
     cdk deploy pipes-lambda
     git remote add aws codecommit::eu-west-1://pipes-lambda
+
+Uncomment the `pipeline.addStage` calls commented above and commit the changes.
+
     git push aws
 
 Pushing to the remote deploys the Lambda.
