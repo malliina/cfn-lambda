@@ -1,18 +1,17 @@
 # cfn-lambda
 
 - Scala
-- CDK
-- AWS CodeCommit
-- AWS CodePipeline
-- AWS Lambda
+- AWS Lambda with CDK Pipelines
 
 ## Usage
 
-    cdk deploy lambda-pipe
-    git remote add aws codecommit::eu-west-1://lambda-pipe
+Based on https://docs.aws.amazon.com/cdk/v2/guide/cdk_pipeline.html
+
+    cdk deploy pipelines-lambda
+    git remote add aws codecommit::eu-west-1://pipelines-lambda
     git push aws
 
-This triggers CodePipeline to build the Lambda function code and deploy it to a Lambda stack.
+Pushing to the remote deploys the Lambda.
 
 ### Deleting the stack
 
