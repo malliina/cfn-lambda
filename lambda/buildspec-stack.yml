@@ -8,8 +8,8 @@ phases:
       - npm install -g aws-cdk@$CDK_VERSION
   build:
     commands:
-      - cdk synth -o target
-      - ls -al target
+      - cdk synth -o cdk-target
+      - ls -al cdk-target
 artifacts:
   files:
     - '**/*'
