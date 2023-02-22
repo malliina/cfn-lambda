@@ -6,6 +6,7 @@ import software.amazon.awscdk.services.codebuild.*
 import software.amazon.awscdk.services.codecommit.Repository
 import software.amazon.awscdk.services.codepipeline.actions.{CloudFormationCreateReplaceChangeSetAction, CloudFormationExecuteChangeSetAction, CodeBuildAction, CodeCommitSourceAction}
 import software.amazon.awscdk.services.codepipeline.{Artifact, Pipeline}
+import software.amazon.awscdk.services.iam.{Effect, PolicyStatement}
 import software.amazon.awscdk.services.lambda.CfnParametersCode
 import software.constructs.Construct
 
@@ -45,6 +46,13 @@ class LambdaPipeline(conf: LambdaConf, scope: Construct, stackName: String)
       )
     )
     .build()
+  val cdkAssetPublishingPolicy = PolicyStatement.Builder
+    .create()
+    .effect(Effect.ALLOW)
+    .actions(list("sts:AssumeRole"))
+    .resources(list(s"arn:aws:iam:$getAccount:role/cdk-*"))
+    .build()
+  stackBuild.addToRolePolicy(cdkAssetPublishingPolicy)
   val sourceOut = new Artifact()
   val buildOut = new Artifact()
   val stackBuildOut = new Artifact()
