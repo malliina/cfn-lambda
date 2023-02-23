@@ -25,17 +25,14 @@ trait CDKSyntax:
       b.exportName(k).value(v)
     }
   }
-
   def buildEnv(value: String) =
     init(BuildEnvironmentVariable.builder()) { b =>
       b.`type`(BuildEnvironmentVariableType.PLAINTEXT).value(value)
     }
-
   def stage(name: String)(actions: IAction*) =
     init(StageProps.builder()) { b =>
       b.stageName(name).actions(list(actions*))
     }
-
   def codeCommit(construct: Construct, id: String)(prep: Repository.Builder => Repository.Builder) =
     prep(Repository.Builder.create(construct, id)).build()
 
