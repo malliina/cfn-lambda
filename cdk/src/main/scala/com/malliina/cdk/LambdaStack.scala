@@ -23,7 +23,6 @@ class LambdaStack(scope: Construct, val constructId: String)
     .build()
   val streamLambda =
     LambdaFunction.fromFunctionName(stack, "StreamFuncNamed", "LogsToElasticsearch_search")
-  function.getLogGroup.grant(streamLambda, "")
 //  val streamPermission = Permission
 //    .builder()
 //    .principal(principal("logs.amazonaws.com"))
