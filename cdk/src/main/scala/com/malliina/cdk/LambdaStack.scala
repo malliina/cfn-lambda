@@ -41,6 +41,7 @@ class LambdaStack(scope: Construct, val constructId: String)
   )
   val cfnPerm = CfnPermission.Builder
     .create(stack, "Perm")
+    .functionName(streamLambda.getFunctionName)
     .principal("logs.amazonaws.com")
     .action("lambda:InvokeFunction")
     .sourceArn(function.getLogGroup.getLogGroupArn)
