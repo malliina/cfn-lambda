@@ -1,7 +1,8 @@
 package com.malliina.cdk
 
+import software.amazon.awscdk.services.iam.{Effect, PolicyStatement}
 import software.amazon.awscdk.{Duration, Stack}
-import software.amazon.awscdk.services.lambda.{CfnParametersCode, Code, FunctionAttributes, IFunction, Permission, Function as LambdaFunction, Runtime as LambdaRuntime}
+import software.amazon.awscdk.services.lambda.{CfnParametersCode, CfnPermission, Code, FunctionAttributes, IFunction, Permission, Function as LambdaFunction, Runtime as LambdaRuntime}
 import software.amazon.awscdk.services.logs.{CfnSubscriptionFilter, FilterPattern, ILogGroup, LogGroup, RetentionDays, SubscriptionFilter, SubscriptionFilterOptions}
 import software.amazon.awscdk.services.logs.destinations.LambdaDestination
 import software.constructs.Construct
@@ -22,14 +23,16 @@ class LambdaStack(scope: Construct, val constructId: String)
     .build()
   val streamLambda =
     LambdaFunction.fromFunctionName(stack, "StreamFuncNamed", "LogsToElasticsearch_search")
-  val streamPermission = Permission
-    .builder()
-    .principal(principal("logs.amazonaws.com"))
-    .action("lambda:InvokeFunction")
-    .sourceArn(function.getLogGroup.getLogGroupArn)
-    .build()
-  streamLambda.addPermission("StreamPermission", streamPermission)
-  function.getLogGroup.addSubscriptionFilter(
+  function.getLogGroup.grant(streamLambda, "")
+//  val streamPermission = Permission
+//    .builder()
+//    .principal(principal("logs.amazonaws.com"))
+//    .action("lambda:InvokeFunction")
+//    .sourceArn(function.getLogGroup.getLogGroupArn)
+//    .build()
+//  streamLambda.addPermission("StreamPermission", streamPermission)
+//  streamLambda.addToRolePolicy(PolicyStatement.Builder.create().effect(Effect.ALLOW).build())
+  val filter = function.getLogGroup.addSubscriptionFilter(
     "SubscriptionFilter",
     SubscriptionFilterOptions
       .builder()
@@ -37,3 +40,10 @@ class LambdaStack(scope: Construct, val constructId: String)
       .filterPattern(FilterPattern.spaceDelimited("timestamp", "level", "logger", "message"))
       .build()
   )
+  val cfnPerm = CfnPermission.Builder
+    .create(stack, "Perm")
+    .principal("logs.amazonaws.com")
+    .action("lambda:InvokeFunction")
+    .sourceArn(function.getLogGroup.getLogGroupArn)
+    .build()
+  filter.getNode.addDependency(cfnPerm)
