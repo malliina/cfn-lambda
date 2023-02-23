@@ -25,6 +25,7 @@ class PipelinesStack(scope: Construct, stackName: String)
           .create("Synth")
           .input(CodePipelineSource.codeCommit(source, "master"))
           .commands(list("./cdk/build.sh"))
+          .env(map("CDK_VERSION" -> BuildInfo.cdkVersion, "OUTPUT_DIR" -> "jartarget"))
           .build()
       )
   }
