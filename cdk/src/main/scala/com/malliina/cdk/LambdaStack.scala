@@ -19,14 +19,8 @@ class LambdaStack(scope: Construct, val constructId: String)
     .memorySize(256)
     .timeout(Duration.seconds(60))
     .build()
-  val streamLambda = LambdaFunction.fromFunctionArn(
-    stack,
-    "StreamFunc",
-    s"arn:aws:lambda:eu-west-1:$getAccount:function:LogsToElasticsearch_search"
-  )
-  // https://github.com/aws/aws-cdk/issues/12958
-//  val logGroup =
-//    LogGroup.fromLogGroupName(stack, "FunctionLogGroup", s"/aws/lambda/${function.getFunctionName}")
+  val streamLambda =
+    LambdaFunction.fromFunctionName(stack, "StreamFuncNamed", "LogsToElasticsearch_search")
   val filter = SubscriptionFilter.Builder
     .create(stack, "Filter")
     .logGroup(function.getLogGroup)

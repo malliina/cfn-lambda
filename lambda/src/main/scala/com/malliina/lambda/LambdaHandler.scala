@@ -12,5 +12,5 @@ class LambdaHandler extends RequestHandler[ScheduledEvent, String]:
     val now = Instant.now()
     log.info(s"Hello, Lambda! The time is now $now.")
     log.warn("This is your final warning.")
-    log.error("Boom")
+    log.error("Boom", Exception("Testing exceptionality."))
     s"Handled event '${event.getId}'."

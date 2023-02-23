@@ -1,7 +1,9 @@
 <configuration>
+    <conversionRule conversionWord="message" converterClass="com.malliina.lambda.SingleLineConverter" />
+    <conversionRule conversionWord="ex" converterClass="com.malliina.lambda.StackTraceSingleLineConverter" />
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} %message %ex %n</pattern>
         </encoder>
     </appender>
     <root level="INFO">
