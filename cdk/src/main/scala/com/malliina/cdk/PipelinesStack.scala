@@ -18,6 +18,7 @@ class PipelinesStack(scope: Construct, stackName: String)
       .repositoryName(getStackName)
       .description(s"Code for $getStackName.")
   }
+  val jarTarget = "jartarget"
   val pipeline = codePipeline(stack, "Pipeline") { p =>
     p.pipelineName(getStackName)
       .synth(
@@ -25,12 +26,12 @@ class PipelinesStack(scope: Construct, stackName: String)
           .create("Synth")
           .input(CodePipelineSource.codeCommit(source, "master"))
           .commands(list("./cdk/build.sh"))
-          .env(map("CDK_VERSION" -> BuildInfo.cdkVersion, "OUTPUT_DIR" -> "jartarget"))
+          .env(map("CDK_VERSION" -> BuildInfo.cdkVersion, "OUTPUT_DIR" -> jarTarget))
           .build()
       )
   }
-  val lambdaQaApp = pipeline.addStage(LambdaStage(stack, "qa"))
-  val lambdaProdApp = pipeline.addStage(LambdaStage(stack, "prod"))
+  val lambdaQaApp = pipeline.addStage(LambdaStage(stack, "qa", jarTarget))
+  val lambdaProdApp = pipeline.addStage(LambdaStage(stack, "prod", jarTarget))
 
-class LambdaStage(scope: Construct, id: String) extends Stage(scope, id):
-  val stack = LambdaStack(this, "LambdaStack")
+class LambdaStage(scope: Construct, id: String, jarTarget: String) extends Stage(scope, id):
+  val stack = LambdaStack(this, "LambdaStack", jarTarget)

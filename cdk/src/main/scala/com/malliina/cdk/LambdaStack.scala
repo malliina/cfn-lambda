@@ -7,12 +7,12 @@ import software.amazon.awscdk.services.logs.{CfnSubscriptionFilter, FilterPatter
 import software.amazon.awscdk.services.logs.destinations.LambdaDestination
 import software.constructs.Construct
 
-class LambdaStack(scope: Construct, val constructId: String)
+class LambdaStack(scope: Construct, val constructId: String, jarTarget: String)
   extends Stack(scope, constructId, CDK.stackProps)
   with CDKSyntax:
   val stack = this
   val code = CfnParametersCode.Builder.create().build()
-  val assetCode = Code.fromAsset("jartarget")
+  val assetCode = Code.fromAsset(jarTarget)
   val function = LambdaFunction.Builder
     .create(stack, "Function")
     .handler("com.malliina.lambda.LambdaHandler")
